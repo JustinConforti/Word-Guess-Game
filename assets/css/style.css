@@ -12,15 +12,41 @@ body {
 }
 h1,h2,h3,
 h4,h5,h6 {
-    background-color: rgba(242, 101, 230, 0.2);
+    background-color: rgb(245, 178, 35);
+    margin-top: 5px;
 }
 #title-image, #gameover-image, #youwin-image{ 
-    display: block;
     margin: 0 auto;
+    display:block;
 }
 
 .gameStatus {
-    background-color:white;
-    margin-top:25%;
+    position:absolute;
+    margin-top:5%;
     margin-left: 25%;
+    background-color:white;
+
+}
+
+.theGameBoard {
+    
+}
+.headerImage {
+
+    width:1000px;
+    height:100px;
+}
+
+#hangmanAnimation {
+
+    position:relative;
+    margin-top: -370px;
+    margin-left:18%;
+    height:350px;
+    width:200px;
+}
+
+.container {
+    height:500px;
+    background-color: white;
 }

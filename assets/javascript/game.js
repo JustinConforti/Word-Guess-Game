@@ -4,7 +4,7 @@ window.onload = function () {
     let possibleBreeds = [
         "alaskanmalamute", "akita", "bulldog", "beagle", "poodle", "rottweiler"
     ]
-
+    var maxGuesses = 10;
     let guessedLetters = []; // letters that the user has guessed
     let guessingWord = []; // this will be used to compare user guesses to actual word
     let pickedWord; // the index of the word that was randomly selected from possibleBreeds array
@@ -22,10 +22,9 @@ window.onload = function () {
 
 
     var startNewRound = function () {
-
-        guessesRemaining = 10;
         gameFinished = false;
 
+        guessesRemaining = 10;
         guessedLetters = [];
         guessingWord = [];
 
@@ -36,6 +35,10 @@ window.onload = function () {
             guessingWord.push(" _ ");
 
         }
+        document.getElementById("hangmanAnimation").src = "assets/images/0.jpg"; // make sure hangman image is cleared
+        document.getElementById("hangmanAnimation").style.cssText = "display: block";
+
+
         console.log(possibleBreeds[pickedWord])
         // assigning guessingWord to the HTML hook userWord
 
@@ -68,14 +71,16 @@ window.onload = function () {
             gameFinished = true;
         }
 
+
         // imgCharacter.src = ""
-        characterSRC = "assets/images/"
-        switch (possibleBreeds[pickedWord]) {
-            case "poodle":
-                characterSRC = characterSRC + "bran.jpg"
-                break;
+        // characterSRC = "assets/images/"
+        // switch (possibleBreeds[pickedWord]) {
+        //     case "poodle":
+        //         characterSRC = characterSRC + "bran.jpg"
+        //         break;
           
-        }
+        // }
+
     } 
     
 
@@ -94,6 +99,9 @@ window.onload = function () {
         }
     };
 
+    function updateHangmanAnimation() {
+        document.getElementById("hangmanAnimation").src = "assets/images/" + (maxGuesses - guessesRemaining) + ".jpg";
+    };
 
     function theUserGuesses(letterIndex) {
 
@@ -125,10 +133,12 @@ window.onload = function () {
 
         if (checkPosition.length <= 0) {
             guessesRemaining = guessesRemaining - 1
+            updateHangmanAnimation();
         } else {
             for (let i = 0; i < checkPosition.length; i++) {
 
                 guessingWord[checkPosition[i]] = letterIndex
+
             }
 
         }
@@ -139,15 +149,15 @@ window.onload = function () {
 
     function checkForWin() {
         if (guessingWord.indexOf(" _ ") === -1) {
-            winImage.style.cssText = "display: none";
+            document.getElementById("youWinImage").style.cssText = "display: block";
             document.getElementById("pressToTryAgainKey").style.cssText = "display: block";
             userWins++;
             hasFinished = true;
-            alert("The corerct word was: " + guessingWord.join(  "" ))
+            alert("The word was: " + guessingWord.join( "" ))
+        if (hasFinished = true) {
             startNewRound()
-
         }
-
+        }
     };
 
 
