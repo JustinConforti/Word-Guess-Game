@@ -149,7 +149,7 @@ window.onload = function () {
 
     function checkForWin() {
         if (guessingWord.indexOf(" _ ") === -1) {
-            document.getElementById("youWinImage").style.cssText = "display: block";
+            winImage.style.cssText = "display: block";
             document.getElementById("pressToTryAgainKey").style.cssText = "display: block";
             userWins++;
             hasFinished = true;
