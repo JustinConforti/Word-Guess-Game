@@ -1,109 +1,155 @@
-let possibleWords = ["greyhound", "poodle", "boxer", "dobermann", "pitbull", "greyhound", "terrier",
-    "bloodhound", "bullmastiff"
-];
+window.onload = function () {
 
-let wordRandom = Math.floor(Math.random() * possibleWords.length)
-let rightGuess = [];
-let wrongGuess = [];
-let underScore = [];
-var lives;
-var counter;
-var space;
-let choosenWord = possibleWords[wordRandom];
 
-let classUnderScore = document.getElementsByClassName('underscores');
-let classRightGuess = document.getElementsByClassName('rightGuess');
-let classWrongGuess = document.getElementsByClassName('wrongGuess');
-let showLives = document.getElementById("livesRemaining")
+    let possibleBreeds = [
+        "alaskanmalamute", "akita", "bulldog", "beagle", "poodle", "rottweiler"
+    ]
 
-console.log(choosenWord);
+    let guessedLetters = []; // letters that the user has guessed
+    let guessingWord = []; // this will be used to compare user guesses to actual word
+    let pickedWord; // the index of the word that was randomly selected from possibleBreeds array
+    let guessesRemaining = 0; // user's lives remaining
+    let gameFinished = false; // status used to mark if game has finished
+    let userWins = 0; // to keep track of users total wins throughout the rounds
 
-play = function() {
-    let possibleWords = ["greyhound", "poodle", "boxer", "dobermann", "pitbull", "greyhound", "terrier",
-    "bloodhound", "bullmastiff"
-];
+    var winImage = document.getElementById("youWinImage");
+    var loseImage = document.getElementById("youLoseImage");
+    var restartKey = document.getElementById("pressToTryAgainKey");
+    var displayUserWins = document.getElementById("userTotalWins");
+    var userWord = document.getElementById("userCurrentWord");
+    var userGuessesRemaining = document.getElementById("userGuessesRemaining");
+    var userGuessedLetters = document.getElementById("userGuessed");
 
-    let wordRandom = Math.floor(Math.random() * possibleWords.length)
 
-   
+    var startNewRound = function () {
+
+        guessesRemaining = 10;
+        gameFinished = false;
+
+        guessedLetters = [];
+        guessingWord = [];
+
+        pickedWord = Math.floor(Math.random() * (possibleBreeds.length));
     
-   
+        for (let i = 0; i < possibleBreeds[pickedWord].length; i++) {
 
-    rightGuess = [];
-    wrongGuess = [];
-    lives = 10;
-    counter = 0;
-    space = 0;
-    comments();
-   
-   
-    // selectCat();
-    // canvas();
-    // result();
+            guessingWord.push(" _ ");
 
-  };
-
-comments = function() {
-    livesRemaining.innerHTML = "You have " + lives + " lives";
-    if (lives < 1) {
-        livesRemaining.innerHTML = "Game Over";
-    }
-    for (var i = 0; i < geusses.length; i++) {
-      if (counter + space === geusses.length) {
-        livesRemaining.innerHTML = "You Win!";
-      }
-    }
-  };
-
-
-//arrow function that will push dashes for choosenWord length
-let generateUnderscore = () => {
-
-    for (let i = 0; i < choosenWord.length; i++) {
-        underScore.push("_");
-
-    }
-    return underScore;
-}
-
-// Add event listenter waiting for keypress, using keyboardEvent to identify what letter was pressed
-// The keyboardEvent returns the letter pressed as well as a letter code of the key that triggered the onkeypress event.
-
-document.addEventListener('keypress', (event) => {
-    let keyword = String.fromCharCode(event.keyCode);
-
-    //will add the letter to the rightGuess array
-    if (choosenWord.indexOf(keyword) > -1) {
-        rightGuess.push(keyword)
-        console.log(rightGuess)
-        // if any index positions of choosenWord array matches the keyword, that letter gets pushed to the correct underScore
-        underScore[choosenWord.indexOf(keyword)] = keyword;
-        classUnderScore[0].innerHTML = underScore.join('');
-        classRightGuess[0].innerHTML = rightGuess;
-
-        console.log(underScore)
-
-        if (underScore.join('') == choosenWord) {
-            alert("You Win!");
         }
-    } else { // else the letter will be pushed to wrongGuess array
-        wrongGuess.push(keyword)
-        classWrongGuess[0].innerHTML = wrongGuess;
+        console.log(possibleBreeds[pickedWord])
+        // assigning guessingWord to the HTML hook userWord
+
+        // Hidding necessary buttons
+        winImage.style.cssText = "display: none";
+        loseImage.style.cssText = "display: none";
+        restartKey.style.visibility = "display: none";
+
+        // updates the HTML to show current status of game
+        updateScreen()
 
     }
 
+    startNewRound()
 
+    function updateScreen() { // updates correct values for each HTML item on page
 
+        displayUserWins.innerHTML = userWins
+        userGuessedLetters.innerHTML = guessedLetters
+        userGuessesRemaining.innerHTML = guessesRemaining
+        userWord.innerText = ""
+        for (let i = 0; i < guessingWord.length; i++) {
 
-});
+            userWord.innerText += guessingWord[i]
 
-classUnderScore[0].innerHTML = generateUnderscore().join(' ');
+        }
+        if (guessesRemaining <= 0) {
+            loseImage.style.visibility = "visible";
+            restartKey.style.visibility = "visible";
+            gameFinished = true;
+        }
 
-document.getElementById("reset").onclick = function() {
-    wrongGuess = [];
-    correctGuess = [];
-
+        // imgCharacter.src = ""
+        characterSRC = "assets/images/"
+        switch (possibleBreeds[pickedWord]) {
+            case "poodle":
+                characterSRC = characterSRC + "bran.jpg"
+                break;
+          
+        }
+    } 
     
-    
-    play();
-  };
+
+    document.onkeydown = function (event) {
+        // checking to see if gameFinished = true, if so it will fire startNewRound function and set gameFinished flag to false
+        if (gameFinished) {
+            startNewRound();
+            gameFinished = false;
+        } else {
+            // Check to make sure a-z was pressed.
+            if (event.keyCode >= 65 && event.keyCode <= 90) {
+                theUserGuesses(event.key.toLowerCase());
+
+
+            }
+        }
+    };
+
+
+    function theUserGuesses(letterIndex) {
+
+        if (guessesRemaining > 0) { // to ensure user still has guesses remaining before evaluating letter guessed
+
+
+            if (guessedLetters.indexOf(letterIndex) === -1) { // checking if what letter the user guessed has already been guessed
+                guessedLetters.push(letterIndex); // if not already guessed, pushes the letter to gussedLetter array
+                checkTheGuess(letterIndex)
+
+            }
+        }
+
+        updateScreen()
+        checkForWin()
+        // check for win condition?
+
+    }
+
+    function checkTheGuess(letterIndex) {
+
+        let checkPosition = [];
+
+        for (let i = 0; i < possibleBreeds[pickedWord].length; i++) {
+            if (possibleBreeds[pickedWord][i] === letterIndex) {
+                checkPosition.push(i);
+            }
+        }
+
+        if (checkPosition.length <= 0) {
+            guessesRemaining = guessesRemaining - 1
+        } else {
+            for (let i = 0; i < checkPosition.length; i++) {
+
+                guessingWord[checkPosition[i]] = letterIndex
+            }
+
+        }
+        console.log(guessingWord)
+
+        updateScreen()
+    }
+
+    function checkForWin() {
+        if (guessingWord.indexOf(" _ ") === -1) {
+            winImage.style.cssText = "display: none";
+            document.getElementById("pressToTryAgainKey").style.cssText = "display: block";
+            userWins++;
+            hasFinished = true;
+            alert("The corerct word was: " + guessingWord.join(  "" ))
+            startNewRound()
+
+        }
+
+    };
+
+
+
+}

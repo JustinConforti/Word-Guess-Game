@@ -1,31 +1,48 @@
-<!DOCTYPE html>
-    <html>
-        <head>
-            <title>Hangman Game</title>
-            <link rel="stylesheet" type="text/css" href="assets/css/style.css">.
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!DOCTYPE HTML>
+<html>
 
-        </head>
-        <body></body>
-<div class="wrapper">
-        <h1>Hangman</h1>
-         <h2> Hangman Game</h2>
-     </div>
-     <div class="wrapper">
-         <div id="buttons">
-         </div>  
-         <p id="catagoryName"></p>
-         <div id="hold">
-         </div>
-         <p id="mylives"></p>
-          <canvas id="stickman">This Text will show if the Browser does NOT support HTML5 Canvas tag</canvas>
-         <div class="container">
-                <div class="underscores"></div>
-                <div id="buttons"></div>
-           <button id="reset">Play again</button>
-         </div>
-     </div>
+<head>
+    <title>Yet another Hangman Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
 
-     <script src="Hangman.js"></script>
-    </body>
-     </html>
+</head>
+
+<body>
+    <div class="container">
+        <div id="header-image" src="#" alt="hangman header image"></div>
+        <div class="row">
+           <div class="col-md-6 theGameBoard">
+            <img id="youWinImage" src="assets/images/you-win.jpg" alt ="Hangman Winning Image"></div>
+            <img id="youLoseImage" src="assets/images/you-lose.jpg" alt ="Hangman Losing Image"></div>
+            <h1 id="pressToTryAgainKey"></h1>
+            <div id="hangmanAnimation" src = "#"></div>
+          </div>
+        <div class = "col-md-6 gameStatus">
+            <h2>Your total wins:<span id ="userTotalWins"></span></h2>
+            <h2>Current Word: <span id="userCurrentWord"></span></h2>
+            <h2>Guesses remaining: <span id ="userGuessesRemaining"></span></h2>
+            <h2>Already Guessed Letters: <span id="userGuessed"></span></h2>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="assets/javascript/game.js">
+
+    </script>
+
+
+</body>
+
+</html>
